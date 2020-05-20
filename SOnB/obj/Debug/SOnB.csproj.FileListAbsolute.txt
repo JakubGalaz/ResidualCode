@@ -1,0 +1,15 @@
+D:\Wojtek\Studia\Programowanie\C#\SOnB\SOnB\SOnB\bin\Debug\SOnB.exe.config
+D:\Wojtek\Studia\Programowanie\C#\SOnB\SOnB\SOnB\bin\Debug\SOnB.exe
+D:\Wojtek\Studia\Programowanie\C#\SOnB\SOnB\SOnB\bin\Debug\SOnB.pdb
+D:\Wojtek\Studia\Programowanie\C#\SOnB\SOnB\SOnB\obj\Debug\SOnB.csproj.CoreCompileInputs.cache
+D:\Wojtek\Studia\Programowanie\C#\SOnB\SOnB\SOnB\obj\Debug\SOnB.exe
+D:\Wojtek\Studia\Programowanie\C#\SOnB\SOnB\SOnB\obj\Debug\SOnB.pdb
+C:\Users\Jakub\Desktop\ResidualCode-master\SOnB\bin\Debug\SOnB.exe.config
+C:\Users\Jakub\Desktop\ResidualCode-master\SOnB\bin\Debug\SOnB.exe
+C:\Users\Jakub\Desktop\ResidualCode-master\SOnB\bin\Debug\SOnB.pdb
+C:\Users\Jakub\Desktop\ResidualCode-master\SOnB\obj\Debug\SOnB.csprojAssemblyReference.cache
+C:\Users\Jakub\Desktop\ResidualCode-master\SOnB\obj\Debug\SOnB.csproj.CoreCompileInputs.cache
+C:\Users\Jakub\Desktop\ResidualCode-master\SOnB\obj\Debug\SOnB.exe
+C:\Users\Jakub\Desktop\ResidualCode-master\SOnB\obj\Debug\SOnB.pdb
+C:\Users\Jakub\Desktop\ResidualCode-master\SOnB\obj\Debug\SOnB.Form1.resources
+C:\Users\Jakub\Desktop\ResidualCode-master\SOnB\obj\Debug\SOnB.csproj.GenerateResource.cache
