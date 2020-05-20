@@ -36,16 +36,29 @@ namespace SOnB
         public void setInformation(string data)
         {
 
+            if (backgroundWorker1.IsBusy != true)
+            {
+                backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
+                backgroundWorker1.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
+                backgroundWorker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
+                backgroundWorker1.RunWorkerAsync();
+            }
+
             label5.Text = "halo";
             Console.WriteLine(data);
-            label5.Update();
+            Application.DoEvents();
+            label5.ResetText();
 
-            backgroundWorker1.ReportProgress(0);
+ 
 
 
 
         }
 
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            label3.Text = "Complete";
+        }
 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -76,9 +89,15 @@ namespace SOnB
         {
 
 
+            var system = listBox1.SelectedItem;
+            string mode = system.ToString();
             program = new Program();
+            program.setMode(mode);
 
-            program.setMode(textBox1.Text);
+ 
+
+
+
             program.setFirstNumber(textBox2.Text);
             program.setSecondNumber(textBox3.Text);
             program.setModuloNumber(textBox4.Text);
@@ -110,6 +129,7 @@ namespace SOnB
             label6.Text = "jakiesi info z change info";
             label7.Text = data;
             label6.Refresh();
+            changeLabel("xd");
             changeLabelFive();
   
 
@@ -117,7 +137,116 @@ namespace SOnB
 
         private void button2_Click(object sender, EventArgs e)
         {
-            label5.Text = info;
+          
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            label2.Text = "12";
+        }
+
+
+
+        private void bin_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+
+            if (System.Text.RegularExpressions.Regex.IsMatch(e.KeyChar.ToString(), @"[^0-1^]"))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void dec_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+
+            if (System.Text.RegularExpressions.Regex.IsMatch(e.KeyChar.ToString(), @"[^0-9^]"))
+            {
+  
+                e.Handled = true;
+            }
+        }
+
+        private void hex_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            
+
+            if (System.Text.RegularExpressions.Regex.IsMatch(e.KeyChar.ToString(), @"[^0-9^+^a-z^+^A-Z^]"))
+            {
+
+                e.Handled = true;
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
+            button1.Enabled = false;
+
+
+            var system = listBox1.SelectedItem;
+            string mode = system.ToString();
+
+            Console.WriteLine(mode);
+            validation(mode);
+
+
+
+        }
+
+
+        private void validation(string mode)
+        {
+            if (mode == "BIN")
+            {
+                textBox2.KeyPress += new KeyPressEventHandler(bin_KeyPress);
+                textBox3.KeyPress += new KeyPressEventHandler(bin_KeyPress);
+                textBox4.KeyPress += new KeyPressEventHandler(bin_KeyPress);
+            }
+            if (mode == "DEC")
+            {
+                textBox2.KeyPress += new KeyPressEventHandler(dec_KeyPress);
+                textBox3.KeyPress += new KeyPressEventHandler(dec_KeyPress);
+                textBox4.KeyPress += new KeyPressEventHandler(dec_KeyPress);
+
+            }
+            if (mode == "HEX")
+            {
+                textBox2.KeyPress += new KeyPressEventHandler(hex_KeyPress);
+                textBox3.KeyPress += new KeyPressEventHandler(hex_KeyPress);
+                textBox4.KeyPress += new KeyPressEventHandler(hex_KeyPress);
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+            ifEmpty();
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            ifEmpty();
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+            ifEmpty();
+        }
+
+        private void ifEmpty()
+        {
+
+            button1.Enabled = false;
+            if (textBox2.Text != "" & textBox3.Text != "" & textBox4.Text != "")
+            {
+                button1.Enabled = true;
+            }
         }
     }
 }

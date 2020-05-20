@@ -64,9 +64,9 @@ namespace SOnB
         
                 string data = "moje informacje z mmultipierSystem";
 
-                Form1 form = new Form1();
+             //   Form1 form = new Form1();
 
-                form.setInformation(data);
+            //    form.setInformation(data);
                 
 
               //  Console.WriteLine("\nUkład mnożący {0}:", number);

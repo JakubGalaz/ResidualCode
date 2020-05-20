@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 
@@ -45,9 +46,10 @@ namespace SOnB
         private void CompareResults(int result1, int result2)
         {
 
+            Form1 form1 = new Form1();
+            form1.setInformation("data");
+            
 
-
-   
             // Console.WriteLine("\nKomparator:");
             if (result1 != -1 && result2 == -1)
             {
@@ -77,7 +79,7 @@ namespace SOnB
             {
              //   Console.WriteLine("Wynik to {0}, oba układy sprawne", result1);
                 var info = "Wynik to" + result1 + ", oba układy sprawne";
-
+                
 
             }
 

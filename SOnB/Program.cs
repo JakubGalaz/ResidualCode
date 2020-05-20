@@ -88,13 +88,7 @@ namespace SOnB
                 threads[0].Join();
                 threads[1].Join();
 
-                threads[0].Abort();
-                threads[1].Abort();
-                threads[2].Abort();
-                threads[3].Abort();
-
-                // Console.ReadKey();
-
+   
 
 
             }
