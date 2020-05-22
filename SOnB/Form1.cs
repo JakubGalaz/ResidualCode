@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Threading;
+using System.Threading;
 
 namespace SOnB
 {
@@ -16,48 +11,45 @@ namespace SOnB
     public partial class Form1 : Form
     {
 
-        
-        public string info;
-        Program program;
 
+        private string info;
 
         //   Comparator comparator;
         public Form1()
         {
           InitializeComponent();
-            backgroundWorker1.WorkerReportsProgress = true;
-            backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker1.DoWork +=
+                new DoWorkEventHandler(backgroundWorker1_DoWork);
+            backgroundWorker1.RunWorkerCompleted +=
+                new RunWorkerCompletedEventHandler(
+            backgroundWorker1_RunWorkerCompleted);
+            backgroundWorker1.ProgressChanged +=
+                new ProgressChangedEventHandler(
+            backgroundWorker1_ProgressChanged);
 
 
         }
 
 
 
-        public void setInformation(string data)
-        {
-
-            if (backgroundWorker1.IsBusy != true)
-            {
-                backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
-                backgroundWorker1.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
-                backgroundWorker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
-                backgroundWorker1.RunWorkerAsync();
-            }
-
-            label5.Text = "halo";
-            Console.WriteLine(data);
-            Application.DoEvents();
-            label5.ResetText();
-
- 
-
-
-
-        }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            label3.Text = "Complete";
+            if (e.Cancelled == true)
+            {
+                label7.Text = "Canceled!";
+            }
+            else if (e.Error != null)
+            {
+                label7.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                button1.Enabled = true;
+                label7.Text = "Zakończono działanie!";
+                label14.Text = info;
+                label14.Visible = true;
+            }
         }
 
 
@@ -68,7 +60,7 @@ namespace SOnB
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            label6.Text = "zmina!";
+            label7.Text = "zmina!";
     
         }
 
@@ -87,62 +79,57 @@ namespace SOnB
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-
-            var system = listBox1.SelectedItem;
-            string mode = system.ToString();
-            program = new Program();
-            program.setMode(mode);
-
- 
-
-
-
-            program.setFirstNumber(textBox2.Text);
-            program.setSecondNumber(textBox3.Text);
-            program.setModuloNumber(textBox4.Text);
-
-            program.start();
-
-        }
-
-        private void changeLabel(string data)
-        {
-            label5.Text = "texciorr";
-            label7.Text = data;
-          Console.WriteLine("informacja z change label: " + data);
-
+            button1.Enabled = false;
+            List<object> arguments = new List<object>();
+            arguments.Add(listBox1.SelectedItem.ToString());
+            arguments.Add(textBox2.Text);
+            arguments.Add(textBox3.Text);
+            arguments.Add(textBox4.Text);
+            
+            label8.Text = textBox2.Text;
+            label9.Text = textBox3.Text;
+            label10.Text = textBox2.Text;
+            label11.Text = textBox3.Text;
+            label8.Visible = true;
+            label9.Visible = true;
+            label10.Visible = true;
+            label11.Visible = true;
+            label12.Text = "Obliczanie reszty \n" + "(" + textBox2.Text + " x " + textBox3.Text + ") MOD " + textBox4.Text;
+            label13.Text = "Obliczanie reszty \n" + "(" + textBox2.Text + " x " + textBox3.Text + ") MOD " + textBox4.Text;
+            label12.Visible = true;
+            label13.Visible = true;
+            label14.BringToFront();
+            pictureBox1.Visible = true;
+            backgroundWorker1.RunWorkerAsync(arguments);
 
         }
 
-
-    
-
-  
-
-        public void changeInfo(string data)
-        {
-
-            Application.DoEvents();
-            Console.WriteLine("changeInfo");
-            Console.WriteLine(data);
-            label6.Text = "jakiesi info z change info";
-            label7.Text = data;
-            label6.Refresh();
-            changeLabel("xd");
-            changeLabelFive();
-  
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-          
-        }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            label2.Text = "12";
+            BackgroundWorker worker = sender as BackgroundWorker;
+            MultiplierSystem multiplierSystem1 = new MultiplierSystem();
+            MultiplierSystem multiplierSystem2 = new MultiplierSystem();
+            EntranceElement entranceElement = new EntranceElement();
+            Comparator comparator = new Comparator();
+            Thread[] threads = new Thread[4];
+            List<object> genericlist = e.Argument as List<object>;
+
+            threads[0] = new Thread(delegate () { entranceElement.SendData((string)genericlist[0], (string)genericlist[1], (string)genericlist[2], (string)genericlist[3]); });
+            threads[0].Start();
+            threads[1] = new Thread(delegate () { info = comparator.getData(); });
+            threads[1].Start();
+
+            threads[2] = new Thread(delegate () { multiplierSystem1.getData(1); });
+            threads[2].Start();
+            threads[2].Join();
+
+            threads[3] = new Thread(delegate () { multiplierSystem2.getData(2); });
+            threads[3].Start();
+            threads[3].Join();
+
+            threads[0].Join();
+            threads[1].Join();
         }
 
 
@@ -248,5 +235,12 @@ namespace SOnB
                 button1.Enabled = true;
             }
         }
+
+      /*    private string parse()
+        {
+
+            return 
+        }
+        */
     }
 }

@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.ComponentModel;
 
 
 namespace SOnB
@@ -14,12 +13,6 @@ namespace SOnB
         private int secondNumber;
         private int modulo;
 
-       
-
-        public void setInfo()
-        {
-
-        }
 
         private int MultiplyWithCheck(int errorInMultiply = 0, int errorInCheck = 0)
         {
@@ -60,20 +53,8 @@ namespace SOnB
             modulo = Int32.Parse(values[2]);
             if (tmp.Length > 0)
             {
-
-        
-                string data = "moje informacje z mmultipierSystem";
-
-             //   Form1 form = new Form1();
-
-            //    form.setInformation(data);
-                
-
-              //  Console.WriteLine("\nUkład mnożący {0}:", number);
-              //   Console.WriteLine("Pierwsza liczba: {0}, druga liczba: {1}, a podstawa kodu {2}\n", firstNumber, secondNumber, modulo);
-
-
-
+                Console.WriteLine("\nUkład mnożący {0}:", number);
+                Console.WriteLine("Pierwsza liczba: {0}, druga liczba: {1}, a podstawa kodu {2}\n", firstNumber, secondNumber, modulo);
 
             }
             s.Close();
@@ -94,9 +75,7 @@ namespace SOnB
             int result = MultiplyWithCheck();
             Send(Convert.ToString(result));
 
-
         }
-
 
 
     }

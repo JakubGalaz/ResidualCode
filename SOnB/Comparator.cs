@@ -1,26 +1,11 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Reflection.Emit;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Forms;
 
 namespace SOnB
 {
     class Comparator
     {
-
-        public string outputinfo = "TO JEST INFO nowe";
-
-
-
-        public string getInfo(string inf)
-        {
-            return inf;
-        }
-
-
-
 
         private static string Serve()
         {
@@ -43,19 +28,15 @@ namespace SOnB
             tcpLsn.Stop();
             return text;
         }
-        private void CompareResults(int result1, int result2)
+        string CompareResults(int result1, int result2)
         {
-
-            Form1 form1 = new Form1();
-            form1.setInformation("data");
             
 
-            // Console.WriteLine("\nKomparator:");
+            Console.WriteLine("\nKomparator:");
             if (result1 != -1 && result2 == -1)
             {
                 Console.WriteLine("Wynik to {0}, ale układ 2 nie jest sprawny", result1);
-                var info = "Wynik to" + result1 + ", ale układ 2 nie jest sprawny";
-             //   f1.changeInfo(info);
+                return "Wynik to " + result1 + ", ale układ 2 nie jest sprawny";
 
 
 
@@ -63,36 +44,34 @@ namespace SOnB
             else if (result1 == -1 && result2 != -1)
             {
                 Console.WriteLine("Wynik to {0}, ale układ 1 nie jest sprawny", result2);
-                var info = "Wynik to" + result1 + ", oba układy sprawne";
-            //    f1.changeInfo(info);
+                return "Wynik to " + result2 + ", ale układ 1 nie jest sprawny";
 
             }
             else if (result1 == -1 && result2 == -1)
             {
-                Console.WriteLine("Coś poszło nie tak, wynik1 = {0} , wynik2 = {1}", result1, result2);
-                var info = "Wynik to" + result1 + ", oba układy sprawne";
-              //  f1.changeInfo(info);
-    
+                Console.WriteLine("Coś poszło nie tak, wynik1 = {0} , wynik2 = {1} (prawdopodobnie oba układy nie są sprawne)", result1, result2);
+                return "Coś poszło nie tak, wynik1 = " + result1 + ", wynik2 = " + result2 + " (prawdopodobnie oba układy nie są sprawne)";
+
+
 
             }
             else if (result1 == result2)
             {
-             //   Console.WriteLine("Wynik to {0}, oba układy sprawne", result1);
-                var info = "Wynik to" + result1 + ", oba układy sprawne";
-                
+                Console.WriteLine("Wynik to {0}, oba układy sprawne", result1);
+                return "Wynik to " + result1 + ", oba układy sprawne";
 
             }
-
+            return null;
 
         }
 
 
-        public void getData()
+        public string getData()
         {
 
             string tmp = Serve();
             var values = tmp.Split(';');
-            CompareResults(Int32.Parse(values[0]), Int32.Parse(values[1]));
+            return CompareResults(Int32.Parse(values[0]), Int32.Parse(values[1]));
 
 
         }
