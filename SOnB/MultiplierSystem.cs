@@ -14,7 +14,7 @@ namespace SOnB
         private int modulo;
 
 
-        private int MultiplyWithCheck(int errorInMultiply = 0, int errorInCheck = 0)
+        private int MultiplyWithCheck(int errorInMultiply, int errorInCheck)
         {
             int result = (firstNumber * secondNumber + errorInMultiply) & 15;
             int moduloResult = result % modulo;
@@ -67,15 +67,18 @@ namespace SOnB
             s.Close();
         }
 
-        public void getData(int number)
+        public void getData(int number, int multError, int modError)
         {
             Connect(2222);
             Receive(number);
             Connect(2223);
-            int result = MultiplyWithCheck();
+            int result = MultiplyWithCheck(multError, modError);
             Send(Convert.ToString(result));
 
         }
+
+
+
 
 
     }
