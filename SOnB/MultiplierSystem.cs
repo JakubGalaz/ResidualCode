@@ -12,17 +12,18 @@ namespace SOnB
         private int firstNumber;
         private int secondNumber;
         private int modulo;
-
+        int checkModuloResult;
+        int result;
 
         private int MultiplyWithCheck(int errorInMultiply, int errorInCheck)
         {
-            int result = (firstNumber * secondNumber + errorInMultiply) & 15;
+            result = (firstNumber * secondNumber + errorInMultiply) & 15;
             int moduloResult = result % modulo;
 
             int checkResult = (firstNumber % modulo) * (secondNumber % modulo) + errorInCheck;
-            int checkModuloResult = checkResult % modulo;
+            checkModuloResult = checkResult % modulo;
 
-            if(moduloResult == checkModuloResult)
+            if (moduloResult == checkModuloResult)
             {
                 return result;
             }
@@ -67,13 +68,15 @@ namespace SOnB
             s.Close();
         }
 
-        public void getData(int number, int multError, int modError)
+        public int[] getData(int number, int multError, int modError)
         {
             Connect(2222);
             Receive(number);
             Connect(2223);
-            int result = MultiplyWithCheck(multError, modError);
-            Send(Convert.ToString(result));
+            int resultWithError = MultiplyWithCheck(multError, modError);
+            Send(resultWithError.ToString());
+
+            return new int[] {firstNumber, secondNumber, modulo, result, checkModuloResult};
 
         }
 

@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Threading;
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+
+using PdfSharp.Pdf.IO;
+
+using System.Diagnostics;
 
 namespace SOnB
 {
@@ -13,6 +20,8 @@ namespace SOnB
 
 
         private string info;
+        private int[] errors = { 1, 1, 1, 1 };
+        private int [][] resultsFromMultipliersSystem = new int [2][];
 
         //   Comparator comparator;
         public Form1()
@@ -27,7 +36,6 @@ namespace SOnB
                 new ProgressChangedEventHandler(
             backgroundWorker1_ProgressChanged);
 
-
         }
 
 
@@ -37,18 +45,42 @@ namespace SOnB
         {
             if (e.Cancelled == true)
             {
-                label7.Text = "Canceled!";
+                label7.Visible = true;
+                label7.Text = "Przerwano!";
             }
             else if (e.Error != null)
             {
-                label7.Text = "Error: " + e.Error.Message;
+                label7.Visible = true;
+                label7.Text = "Błąd: " + e.Error.Message;
             }
             else
             {
+                multiplicationEquation1.Text = resultFromSelectedNumberSystem(resultsFromMultipliersSystem[0][0]) 
+                    + " * " + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[0][1]);
+                multiplicationEquation2.Text = resultFromSelectedNumberSystem(resultsFromMultipliersSystem[1][0]) 
+                    + " * " + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[1][1]);
+                multiplier1Result.Text = resultFromSelectedNumberSystem(resultsFromMultipliersSystem[0][3]);
+                multiplier2Result.Text = resultFromSelectedNumberSystem(resultsFromMultipliersSystem[1][3]);
+
+                moduloResult1.Text = resultFromSelectedNumberSystem(resultsFromMultipliersSystem[0][3]) + " % " + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[0][2])
+                    + "\n?\n((" + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[0][0])
+                    + " % " + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[0][2]) + ") * (" + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[0][1]) + " % "
+                    + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[0][2]) + ")) % " + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[0][2]);
+
+                moduloResult2.Text = resultFromSelectedNumberSystem(resultsFromMultipliersSystem[1][3]) + " % " + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[1][2])
+                    + "\n?\n((" + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[1][0])
+                    + " % " + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[1][2]) + ") * (" + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[1][1]) + " % "
+                    + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[1][2]) + ")) % " + resultFromSelectedNumberSystem(resultsFromMultipliersSystem[1][2]);
+
                 button1.Enabled = true;
                 label7.Text = "Zakończono działanie!";
+                label7.Visible = true;
                 label14.Text = info;
                 label14.Visible = true;
+                multiplicationEquation1.Visible = true;
+                multiplicationEquation2.Visible = true;
+                moduloResult1.Visible = true;
+                moduloResult2.Visible = true;
             }
         }
 
@@ -83,37 +115,10 @@ namespace SOnB
             List<object> arguments = new List<object>();
 
 
-
             string selectedSystem = listBox1.SelectedItem.ToString();
             string firstNumberTxt = textBox2.Text;
             string secondNumberTxt = textBox3.Text;
             string moduleTxt = textBox4.Text;
-            int[] intArray = new int[3];
-            int multResult;
-            int modResult;
-
-            if (listBox1.SelectedIndex == 0)
-            {
-
-                intArray = convertToInt("HEX", firstNumberTxt, secondNumberTxt, moduleTxt);
-
-            }
-            else if (listBox1.SelectedIndex == 1)
-            {
-                intArray = convertToInt("DEC", firstNumberTxt, secondNumberTxt, moduleTxt);
-
-            }
-            else
-            {
-                intArray = convertToInt("BIN", firstNumberTxt, secondNumberTxt, moduleTxt);
-            }
-
-
-
-
-            multResult = (intArray[0] * intArray[1]) & 15;
-            modResult = multResult % intArray[2];
-            string modResultTxt = resultFromSelectedNumberSystem(modResult.ToString());
 
 
             arguments.Add(selectedSystem);
@@ -129,19 +134,9 @@ namespace SOnB
             label10.Text = textBox2.Text;
             label11.Text = textBox3.Text;
 
-            label6.Text = resultFromSelectedNumberSystem(multResult.ToString());
-            label15.Text = resultFromSelectedNumberSystem(multResult.ToString());
 
-            if (radioButton1.Checked == false)
+            if (checkBoxError.Checked == false)
             {
-
-
-
-
-
-
-                label12.Text = "Obliczanie reszty \n" + "(" + textBox2.Text + " x " + textBox3.Text + ") MOD " + textBox4.Text + " = " + modResultTxt;
-                label13.Text = "Obliczanie reszty \n" + "(" + textBox2.Text + " x " + textBox3.Text + ") MOD " + textBox4.Text + " = " + modResultTxt;
 
                 backgroundWorker1.RunWorkerAsync(arguments);
 
@@ -149,52 +144,47 @@ namespace SOnB
             }
             else
             {
-                
-                if (checkedListBox1.SelectedIndex == 0)
+                if (checkedListBox1.GetItemChecked(0))
                 {
-                  int error1 =  int.Parse(label17.Text);
-                    arguments[4] = error1;
-                   int multResult1 = (multResult + error1) & 15;
-                    label15.Text = resultFromSelectedNumberSystem(multResult1.ToString());
+                    arguments[4] = errors[0];
+                    Console.WriteLine(0);
                 }
-                if (checkedListBox1.SelectedIndex == 1)
+                if (checkedListBox1.GetItemChecked(1))
                 {
-                    arguments[5] = int.Parse(label19.Text); ;
+                    arguments[5] = errors[1];
+                    Console.WriteLine(1);
 
                 }
-                if (checkedListBox1.SelectedIndex == 2)
+                if (checkedListBox1.GetItemChecked(2))
                 {
+                    arguments[6] = errors[2];
+                    Console.WriteLine(2);
 
-                    int error1 = int.Parse(label21.Text);
-                    arguments[6] = error1;
-                    int multResult2 = (multResult + error1) & 15;
-                    label6.Text = resultFromSelectedNumberSystem(multResult2.ToString());
                 }
-                if (checkedListBox1.SelectedIndex == 3)
+                if (checkedListBox1.GetItemChecked(3))
                 {
-                    arguments[7] = int.Parse(label23.Text); ;
+                    arguments[7] = errors[3];
+                    Console.WriteLine(3);
+
                 }
 
 
 
-
-                label12.Text = "Obliczanie reszty \n" + "( Układ mnożący 1) MOD " + textBox4.Text;
-                label13.Text = "Obliczanie reszty \n" + "( Układ mno) MOD " + textBox4.Text;
                 backgroundWorker1.RunWorkerAsync(arguments);
             }
 
-            label6.Visible = true;
+            multiplier2Result.Visible = true;
             label8.Visible = true;
             label9.Visible = true;
             label10.Visible = true;
             label11.Visible = true;
-            label15.Visible = true;
-            label12.Visible = true;
-            label13.Visible = true;
+            multiplier1Result.Visible = true;
+            moduloResult1.Visible = true;
+            moduloResult2.Visible = true;
             label14.BringToFront();
             pictureBox1.Visible = true;
 
-
+            button10.Visible = true;
         }
 
 
@@ -211,29 +201,22 @@ namespace SOnB
 
 
             int firstMultError = (int)genericlist[4];
-            int secondMultError = (int)genericlist[5];
-            int firstModError = (int)genericlist[6];
+            int firstModError = (int)genericlist[5];
+            int secondMultError = (int)genericlist[6];
             int secondModError = (int)genericlist[7];
 
-
-
-
-
             threads[0] = new Thread(delegate () { entranceElement.SendData((string)genericlist[0], (string)genericlist[1], (string)genericlist[2], (string)genericlist[3]); });
-
-
-
 
 
             threads[0].Start();
             threads[1] = new Thread(delegate () { info = comparator.getData(); });
             threads[1].Start();
 
-            threads[2] = new Thread(delegate () { multiplierSystem1.getData(1, firstMultError, firstModError); });
+            threads[2] = new Thread(delegate () { resultsFromMultipliersSystem[0] = multiplierSystem1.getData(1, firstMultError, firstModError); });
             threads[2].Start();
             threads[2].Join();
 
-            threads[3] = new Thread(delegate () { multiplierSystem2.getData(2, secondMultError, secondModError); });
+            threads[3] = new Thread(delegate () { resultsFromMultipliersSystem[1] = multiplierSystem2.getData(2, secondMultError, secondModError); });
             threads[3].Start();
             threads[3].Join();
 
@@ -405,25 +388,24 @@ namespace SOnB
 
         }
 
-        public string resultFromSelectedNumberSystem(string number)
+        public string resultFromSelectedNumberSystem(int number)
         {
             string result;
-            int intNumber = Int32.Parse(number);
 
             if (listBox1.SelectedIndex == 0)
             {
-                result = intNumber.ToString("X");
+                result = number.ToString("X");
                 return result;
 
             }
             else if (listBox1.SelectedIndex == 1)
             {
-                return number;
+                return number.ToString();
             }
             else
             {
 
-                result = Convert.ToString(intNumber, 2);
+                result = Convert.ToString(number, 2);
                 return result;
             }
 
@@ -433,61 +415,273 @@ namespace SOnB
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int result = int.Parse(label17.Text);
-            result = result - 1;
-            label17.Text = result.ToString();
+            if (errors[0] > 0)
+            {
+                errors[0]--;
+                label17.Text = resultFromSelectedNumberSystem(errors[0]);
+            }
 
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            int result = int.Parse(label17.Text);
-            result = result + 1;
-            label17.Text = result.ToString();
+            errors[0]++;
+            label17.Text = resultFromSelectedNumberSystem(errors[0]);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            int result = int.Parse(label19.Text);
-            result = result - 1;
-            label19.Text = result.ToString();
-        }
+            if (errors[1] > 0)
+            {
+                errors[1]--;
+                label19.Text = resultFromSelectedNumberSystem(errors[1]);
+            }
+    }
 
         private void button7_Click(object sender, EventArgs e)
         {
 
-            int result = int.Parse(label19.Text);
-            result = result + 1;
-            label19.Text = result.ToString();
+            errors[1]++;
+            label19.Text = resultFromSelectedNumberSystem(errors[1]);
         }
 
 
         private void button5_Click(object sender, EventArgs e)
         {
-            int result = int.Parse(label21.Text);
-            result = result - 1;
-            label21.Text = result.ToString();
+            if (errors[2] > 0)
+            {
+                errors[2]--;
+                label21.Text = resultFromSelectedNumberSystem(errors[2]);
+            }
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            int result = int.Parse(label21.Text);
-            result = result + 1;
-            label21.Text = result.ToString();
+            errors[2]++;
+            label21.Text = resultFromSelectedNumberSystem(errors[2]);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            int result = int.Parse(label23.Text);
-            result = result - 1;
-            label23.Text = result.ToString();
+            if (errors[3] > 0)
+            {
+                errors[3]--;
+                label23.Text = resultFromSelectedNumberSystem(errors[3]);
+            }
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            int result = int.Parse(label23.Text);
-            result = result + 1;
-            label23.Text = result.ToString();
+            errors[3]++;
+            label23.Text = resultFromSelectedNumberSystem(errors[3]); ;
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            createReport();
+        }
+
+
+        public void createReport()
+        {
+            PdfDocument document = new PdfDocument();
+
+
+            document.Info.Title = "Galazka_Golabek_SonB";
+
+            PdfPage page = document.AddPage();
+
+
+
+            // Get an XGraphics object for drawing
+
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+
+            // Create a font
+
+            XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
+
+            // Draw the text
+
+
+            /*
+
+                        gfx.DrawString("Jakub Gałązka, Wojciech Gołąbek 2ID21A", font, XBrushes.Black,
+
+                        new XRect(0, 10, page.Width, page.Height),
+
+                        XStringFormats.TopCenter);
+
+                */
+            int x = 30;
+
+
+            gfx.DrawString(" Sytemy odporne na błędy. Raport aplikacji: ", font, XBrushes.Black,
+
+            new XRect(0, x, page.Width, page.Height),
+
+            XStringFormats.TopCenter);
+
+
+             x += 50;
+
+            gfx.DrawString("Symulacja pracy dwóch 4 - bitowych układów   ", font, XBrushes.Black,
+
+            new XRect(0, x, page.Width, page.Height),
+
+            XStringFormats.TopCenter);
+
+            x += 40;
+            gfx.DrawString(" mnożących porównujących wyniki w układzie JCT. ", font, XBrushes.Black,
+
+            new XRect(0, x, page.Width, page.Height),
+
+            XStringFormats.TopCenter);
+
+
+            x += 50;
+
+            font = new XFont("Verdana", 15, XFontStyle.BoldItalic);
+
+            gfx.DrawString("Mnożna: " + textBox2.Text.ToString(), font, XBrushes.Black,
+
+            new XRect(10, x, page.Width, page.Height),
+
+            XStringFormats.TopLeft);
+
+
+            x += 30;
+            gfx.DrawString("Mnożnik: " + textBox3.Text.ToString(), font, XBrushes.Black,
+
+            new XRect(10, x, page.Width, page.Height),
+
+            XStringFormats.TopLeft);
+
+            x += 30;
+
+            gfx.DrawString("Podstawa kodu: " + textBox4.Text.ToString(), font, XBrushes.Black,
+
+            new XRect(10, x, page.Width, page.Height),
+
+            XStringFormats.TopLeft);
+
+            x += 30;
+
+            if (checkBoxError.Checked == false)
+            {
+
+                gfx.DrawString("Symulacja bez wstrzyknięcia błędów", font, XBrushes.Black,
+
+                new XRect(10, x, page.Width, page.Height),
+
+                XStringFormats.TopLeft);
+                x += 30;
+            }
+            else
+            {
+                gfx.DrawString("Symulacja ze wstrzyknięcia błędów", font, XBrushes.Black,
+
+                new XRect(10, x, page.Width, page.Height),
+
+                XStringFormats.TopLeft);
+                x += 30;
+
+                gfx.DrawString("Wstrzyknięto: ", font, XBrushes.Black,
+
+                new XRect(10, x, page.Width, page.Height),
+
+                XStringFormats.TopLeft);
+                x += 30;
+
+
+                foreach (int indexChecked in checkedListBox1.CheckedIndices)
+                {
+                    if (indexChecked == 0)
+                    {
+
+                        gfx.DrawString("Błąd pierwszego układu: " + label17.Text.ToString(), font, XBrushes.Black,
+
+                        new XRect(10, x, page.Width, page.Height),
+
+                        XStringFormats.TopLeft);
+                        x += 30;
+                    }
+                    else
+                          if (indexChecked == 1)
+                    {
+
+                        gfx.DrawString("Błąd modulo 1: " + label19.Text.ToString(), font, XBrushes.Black,
+
+                        new XRect(10, x, page.Width, page.Height),
+
+                        XStringFormats.TopLeft);
+                        x += 30;
+                    }
+                    else if (indexChecked == 2)
+                    {
+
+                        gfx.DrawString("Błąd drugiego układu: " + label21.Text.ToString(), font, XBrushes.Black,
+
+                        new XRect(10, x, page.Width, page.Height),
+
+                        XStringFormats.TopLeft);
+                        x += 30;
+
+                    }
+                    else if (indexChecked == 3)
+                    {
+
+                        gfx.DrawString("Błąd modulo 2: " + label23.Text.ToString(), font, XBrushes.Black,
+                        new XRect(10, x, page.Width, page.Height),
+                        XStringFormats.TopLeft);
+                        x += 30;
+                    }
+                };
+
+                
+
+
+
+            }
+
+            {
+
+
+
+                x += 30;
+                gfx.DrawString("Pdosumowanie: " , font, XBrushes.Black,
+                new XRect(10, x, page.Width, page.Height),
+                XStringFormats.TopLeft);
+                x += 30;
+                gfx.DrawString("Wynik 1 układu mnożącego: " + multiplier1Result.Text.ToString(),  font, XBrushes.Black,
+                new XRect(10, x, page.Width, page.Height),
+                XStringFormats.TopLeft);
+
+                x += 30;
+                gfx.DrawString("Wynik 2 układu mnożącego: " + multiplier2Result.Text.ToString(), font, XBrushes.Black,
+                new XRect(10, x, page.Width, page.Height),
+                XStringFormats.TopLeft);
+
+                x += 30;
+                gfx.DrawString(label14.Text.ToString(), font, XBrushes.Black,
+                new XRect(10, x, page.Width, page.Height),
+                XStringFormats.TopLeft);
+
+
+                x += 50;
+                gfx.DrawString("Jakub Gałązka, Wojciech Gołąbek 2ID21A", font, XBrushes.Black,
+
+                new XRect(-10, x, page.Width, page.Height),
+
+                XStringFormats.TopRight);
+            }
+
+
+            const string filename = "RaportSonB.pdf";
+            document.Save(filename);
+            Process.Start(filename);
+
         }
     }
 }

@@ -46,14 +46,13 @@ namespace SOnB
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.moduloResult1 = new System.Windows.Forms.Label();
+            this.moduloResult2 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.multiplier1Result = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.label6 = new System.Windows.Forms.Label();
+            this.multiplier2Result = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -70,6 +69,10 @@ namespace SOnB
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
+            this.multiplicationEquation1 = new System.Windows.Forms.Label();
+            this.multiplicationEquation2 = new System.Windows.Forms.Label();
+            this.checkBoxError = new System.Windows.Forms.CheckBox();
+            this.button10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,7 +89,7 @@ namespace SOnB
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(20, 163);
+            this.button1.Location = new System.Drawing.Point(20, 154);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -183,9 +186,10 @@ namespace SOnB
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(421, 134);
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label8.Location = new System.Drawing.Point(427, 130);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(35, 13);
+            this.label8.Size = new System.Drawing.Size(52, 17);
             this.label8.TabIndex = 15;
             this.label8.Text = "label8";
             this.label8.Visible = false;
@@ -193,9 +197,10 @@ namespace SOnB
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(537, 134);
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label9.Location = new System.Drawing.Point(546, 130);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 13);
+            this.label9.Size = new System.Drawing.Size(52, 17);
             this.label9.TabIndex = 16;
             this.label9.Text = "label9";
             this.label9.Visible = false;
@@ -203,9 +208,10 @@ namespace SOnB
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(679, 134);
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label10.Location = new System.Drawing.Point(689, 130);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(41, 13);
+            this.label10.Size = new System.Drawing.Size(61, 17);
             this.label10.TabIndex = 17;
             this.label10.Text = "label10";
             this.label10.Visible = false;
@@ -213,32 +219,35 @@ namespace SOnB
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(797, 134);
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label11.Location = new System.Drawing.Point(811, 130);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 13);
+            this.label11.Size = new System.Drawing.Size(61, 17);
             this.label11.TabIndex = 18;
             this.label11.Text = "label11";
             this.label11.Visible = false;
             // 
-            // label12
+            // moduloResult1
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(415, 335);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(41, 13);
-            this.label12.TabIndex = 19;
-            this.label12.Text = "label12";
-            this.label12.Visible = false;
+            this.moduloResult1.AutoSize = true;
+            this.moduloResult1.BackColor = System.Drawing.Color.White;
+            this.moduloResult1.Location = new System.Drawing.Point(416, 355);
+            this.moduloResult1.Name = "moduloResult1";
+            this.moduloResult1.Size = new System.Drawing.Size(41, 13);
+            this.moduloResult1.TabIndex = 19;
+            this.moduloResult1.Text = "label12";
+            this.moduloResult1.Visible = false;
             // 
-            // label13
+            // moduloResult2
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(679, 335);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 13);
-            this.label13.TabIndex = 20;
-            this.label13.Text = "label13";
-            this.label13.Visible = false;
+            this.moduloResult2.AutoSize = true;
+            this.moduloResult2.BackColor = System.Drawing.Color.White;
+            this.moduloResult2.Location = new System.Drawing.Point(680, 355);
+            this.moduloResult2.Name = "moduloResult2";
+            this.moduloResult2.Size = new System.Drawing.Size(41, 13);
+            this.moduloResult2.TabIndex = 20;
+            this.moduloResult2.Text = "label13";
+            this.moduloResult2.Visible = false;
             // 
             // label14
             // 
@@ -250,22 +259,26 @@ namespace SOnB
             this.label14.Text = "label14";
             this.label14.Visible = false;
             // 
-            // label15
+            // multiplier1Result
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(296, 275);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(41, 13);
-            this.label15.TabIndex = 22;
-            this.label15.Text = "label15";
-            this.label15.Visible = false;
+            this.multiplier1Result.AutoSize = true;
+            this.multiplier1Result.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.multiplier1Result.Location = new System.Drawing.Point(317, 275);
+            this.multiplier1Result.Name = "multiplier1Result";
+            this.multiplier1Result.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.multiplier1Result.Size = new System.Drawing.Size(61, 17);
+            this.multiplier1Result.TabIndex = 22;
+            this.multiplier1Result.Text = "label15";
+            this.multiplier1Result.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.multiplier1Result.Visible = false;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(251, 352);
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.Location = new System.Drawing.Point(16, 107);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.Size = new System.Drawing.Size(66, 24);
             this.label7.TabIndex = 23;
             this.label7.Text = "label7";
             this.label7.Visible = false;
@@ -283,26 +296,16 @@ namespace SOnB
             this.checkedListBox1.Size = new System.Drawing.Size(219, 109);
             this.checkedListBox1.TabIndex = 25;
             // 
-            // radioButton1
+            // multiplier2Result
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(20, 193);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(106, 17);
-            this.radioButton1.TabIndex = 26;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Uwzględnij błędy";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(848, 275);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
-            this.label6.TabIndex = 27;
-            this.label6.Text = "label6";
-            this.label6.Visible = false;
+            this.multiplier2Result.AutoSize = true;
+            this.multiplier2Result.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.multiplier2Result.Location = new System.Drawing.Point(891, 275);
+            this.multiplier2Result.Name = "multiplier2Result";
+            this.multiplier2Result.Size = new System.Drawing.Size(52, 17);
+            this.multiplier2Result.TabIndex = 27;
+            this.multiplier2Result.Text = "label6";
+            this.multiplier2Result.Visible = false;
             // 
             // label16
             // 
@@ -398,7 +401,7 @@ namespace SOnB
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(28, 399);
+            this.button4.Location = new System.Drawing.Point(25, 399);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(36, 25);
             this.button4.TabIndex = 38;
@@ -418,7 +421,7 @@ namespace SOnB
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(25, 487);
+            this.button6.Location = new System.Drawing.Point(26, 487);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(36, 25);
             this.button6.TabIndex = 40;
@@ -456,11 +459,58 @@ namespace SOnB
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
+            // multiplicationEquation1
+            // 
+            this.multiplicationEquation1.AutoSize = true;
+            this.multiplicationEquation1.BackColor = System.Drawing.Color.White;
+            this.multiplicationEquation1.Location = new System.Drawing.Point(479, 235);
+            this.multiplicationEquation1.Name = "multiplicationEquation1";
+            this.multiplicationEquation1.Size = new System.Drawing.Size(35, 13);
+            this.multiplicationEquation1.TabIndex = 44;
+            this.multiplicationEquation1.Text = "label6";
+            this.multiplicationEquation1.Visible = false;
+            // 
+            // multiplicationEquation2
+            // 
+            this.multiplicationEquation2.AutoSize = true;
+            this.multiplicationEquation2.BackColor = System.Drawing.Color.White;
+            this.multiplicationEquation2.Location = new System.Drawing.Point(741, 235);
+            this.multiplicationEquation2.Name = "multiplicationEquation2";
+            this.multiplicationEquation2.Size = new System.Drawing.Size(35, 13);
+            this.multiplicationEquation2.TabIndex = 45;
+            this.multiplicationEquation2.Text = "label6";
+            this.multiplicationEquation2.Visible = false;
+            // 
+            // checkBoxError
+            // 
+            this.checkBoxError.AutoSize = true;
+            this.checkBoxError.Location = new System.Drawing.Point(20, 192);
+            this.checkBoxError.Name = "checkBoxError";
+            this.checkBoxError.Size = new System.Drawing.Size(107, 17);
+            this.checkBoxError.TabIndex = 46;
+            this.checkBoxError.Text = "Uwzględnij błędy";
+            this.checkBoxError.UseVisualStyleBackColor = true;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(15, 529);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(112, 23);
+            this.button10.TabIndex = 47;
+            this.button10.Text = "Generuj raport!";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Visible = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1114, 661);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.checkBoxError);
+            this.Controls.Add(this.multiplicationEquation2);
+            this.Controls.Add(this.multiplicationEquation1);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
@@ -477,14 +527,13 @@ namespace SOnB
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.multiplier2Result);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label15);
+            this.Controls.Add(this.multiplier1Result);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
+            this.Controls.Add(this.moduloResult2);
+            this.Controls.Add(this.moduloResult1);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -501,7 +550,7 @@ namespace SOnB
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Kod residualny";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -530,14 +579,13 @@ namespace SOnB
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label moduloResult1;
+        private System.Windows.Forms.Label moduloResult2;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label multiplier1Result;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label multiplier2Result;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
@@ -554,5 +602,9 @@ namespace SOnB
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Label multiplicationEquation1;
+        private System.Windows.Forms.Label multiplicationEquation2;
+        private System.Windows.Forms.CheckBox checkBoxError;
+        private System.Windows.Forms.Button button10;
     }
 }
