@@ -13,5 +13,13 @@ The application works on the Windows operating system. It is necessary for commi
 .NET platform.
 
 ## Features
+* Simulation system
+* Injection of 4 errors:
+- first multiplier error
+- second multiplier error
+- first modulo error
+- second modulo error
+* Generating reports
+
 ## Screen shots
 
